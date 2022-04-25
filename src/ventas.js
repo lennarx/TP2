@@ -14,15 +14,30 @@ const ventas = [
                 precioProducto : 80000
             }
         ]
+    },
+    {   id : 2,
+        idUsuario: 2,
+        productos : [
+            {
+                idProducto: 1,
+                nombreProducto : 'Heladera',
+                precioProducto : 60000
+            },
+            {
+                idProducto: 2,
+                nombreProducto : 'Microondas',
+                precioProducto : 80000
+            }
+        ]
     }
 ]
 
-export const obtenerVentas = () => {
-
+export function obtenerVentas() {
+    return ventas.map(e =>({id: e.id, Iduser: e.idUsuario, productos: e.productos}));
 }
 
 export const obtenerVentaPorId = (idVenta) => {
-
+    return ventas.find(v => v.id === idVenta)
 }
 
 export const insertarVenta = (venta) => {
