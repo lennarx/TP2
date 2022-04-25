@@ -1,4 +1,5 @@
 import express from 'express'
+import { obtenerVentaPorId, obtenerVentas, insertarVenta } from './ventas'
 
 const app = express()
 
