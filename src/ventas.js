@@ -30,6 +30,7 @@ export const insertarVenta = (venta) => {
     if(venta != null && venta.id === undefined){
         venta.id = ventas[ventas.length - 1].id + 1
         ventas.push(venta);
+        return venta;
     }
     else{
         throw new Error('La venta no es válida')
