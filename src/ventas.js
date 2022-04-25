@@ -26,5 +26,12 @@ export const obtenerVentaPorId = (idVenta) => {
 }
 
 export const insertarVenta = (venta) => {
-
+    //futura feature para validar si hay stock de dicho producto
+    if(venta != null && venta.id === undefined){
+        venta.id = ventas[ventas.length - 1].id + 1
+        ventas.push(venta);
+    }
+    else{
+        throw new Error('La venta no es válida')
+    }
 }

@@ -1,9 +1,19 @@
 import express from 'express'
-import { obtenerVentaPorId, obtenerVentas, insertarVenta } from './ventas'
+import { obtenerVentaPorId, obtenerVentas, insertarVenta } from './ventas.js'
 
 const app = express()
 
 app.use(express.json())
+
+app.post('/ventas', (req, res) => {
+    try {
+        const venta = req.body
+        const ventaAgregada = insertarVenta(venta)
+        res.status(201).json(ventaAgregada)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+})
 
 let server
 
