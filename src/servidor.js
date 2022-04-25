@@ -5,6 +5,11 @@ const app = express()
 
 app.use(express.json())
 
+app.get('/ventas', (req, res) => {
+    const ventas = obtenerVentas()
+    res.json(ventas)
+})
+
 app.post('/ventas', (req, res) => {
     try {
         const venta = req.body
