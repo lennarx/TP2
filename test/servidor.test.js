@@ -15,6 +15,15 @@ describe('servidor de pruebas', () => {
     })
 
     describe('el servidor esta escuchando', () => {
+
+            describe('al pedirle las ventas', () => {
+                it('devuelve un array con ventas', async () => {
+                    const { data: ventasObtenidas, status } = await axios.get('http://localhost:3000/ventas')
+                    assert.strictEqual(status, 200)
+                    const ventasReales = obtenerVentas()
+                    assert.deepStrictEqual(ventasObtenidas, ventasReales)
+                })
+            })
         
         describe('al mandarle una venta', () => {
             it('la agrega a las demas existentes', async () => {
