@@ -1,8 +1,8 @@
 const ventas = [
     {
-        id : 1,
+        id: 1,
         idUsuario: 1,
-        productos : [
+        productos: [
             {
                 idProducto: 1,
                 nombreProducto : 'Heladera',
@@ -15,9 +15,9 @@ const ventas = [
             }
         ]
     },
-    {   id : 2,
+    {   id: 2,
         idUsuario: 2,
-        productos : [
+        productos: [
             {
                 idProducto: 1,
                 nombreProducto : 'Heladera',
@@ -37,7 +37,7 @@ export function obtenerVentas() {
 }
 
 export const obtenerVentaPorId = (idVenta) => {
-    return ventas.find(v => v.id === idVenta)
+    return ventas.find(v => v.id.toString() === idVenta)
 }
 
 export const insertarVenta = (venta) => {
