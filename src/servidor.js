@@ -1,6 +1,7 @@
 import express from "express";
 import { obtenerVentaPorId, obtenerVentas, insertarVenta } from "./ventas.js";
-
+import { obtenerProductoPorId, obtenerProductos, insertarProducto, borrarProductoSegunId, 
+         reemplazarProducto } from "./productos.js";
 const app = express();
 
 app.use(express.json());
@@ -43,6 +44,16 @@ app.post("/ventas", (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
+app.post('/productos', (req, res) => {
+  try {
+      const producto = req.body
+      const productoAgregado = insertarProducto(producto)
+      res.status(201).json(productoAgregado)
+  } catch (error) {
+      res.status(400).json({ error: error.message })
+  }
+})
 
 let server;
 
