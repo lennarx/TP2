@@ -2,7 +2,35 @@ import assert from 'assert'
 import axios from 'axios'
 import { conectar, desconectar } from '../src/servidor.js'
 
-import { obtenerProductoPorId, obtenerProductos } from '../src/productos.js'
+import { obtenerProductoPorId, obtenerProductos } from '../src/productos/productos.js'
+
+const productosTest = [
+  {
+    id: 1,
+    nombreProducto: 'Heladera',
+    descripcionProducto: 'No Frost - 44 litros',
+    precioProducto: 60000
+  },
+  {
+    idProducto: 2,
+    nombreProducto: 'Microondas',
+    descripcionProducto: 'Microondas - Horno Electrico - Grill - Función descongelar',
+    precioProducto: 80000
+  },
+  {
+    idProducto: 3,
+    nombreProducto: 'Cocina',
+    descripcionProducto: 'Gas Natural - 6 hornallas - Convertible a Gas Envasado',
+    precioProducto: 80000
+  },
+  {
+    idProducto: 4,
+    nombreProducto: 'TV 60 Pulgadas',
+    descripcionProducto: '60 Pulgadas - 3 lineas HDMI - Smart',
+    precioProducto: 80000
+  }
+]
+
 
 //insertarProducto, borrarProductoSegunId, reemplazarProducto
 describe("servidor de pruebas", () => {
