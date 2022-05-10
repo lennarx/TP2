@@ -1,24 +1,77 @@
 import assert from "assert";
 import axios from "axios";
+import { borrarProductos } from "../src/productos/productos.js";
 import { conectar, desconectar } from "../src/servidor.js";
 
-import { obtenerVentas } from "../src/ventas.js";
-import { obtenerVentaPorId } from "../src/ventas.js"
+import {
+  obtenerVentas, agregarVenta,
+  borrarVentas,
+  obtenerVentasPorId
+} from '../src/ventas/ventas.js'
+
+const ventasTest = [
+  {
+    idUsuario: 1,
+    productos: [
+      {
+        idProducto: 1,
+        nombreProducto: 'Heladera',
+        precioProducto: 60000
+      },
+      {
+        idProducto: 2,
+        nombreProducto: 'Microondas',
+        precioProducto: 80000
+      }
+    ]
+  },
+  {
+    idUsuario: 2,
+    productos: [
+      {
+        idProducto: 1,
+        nombreProducto: 'Heladera',
+        precioProducto: 60000
+      },
+      {
+        idProducto: 2,
+        nombreProducto: 'Microondas',
+        precioProducto: 80000
+      }
+    ]
+  }
+]
+
 
 describe("servidor de pruebas", () => {
+  let urlVentas
+
   before(async () => {
-    await conectar();
+    const port = await conectar()
+    urlVentas = `http://localhost:${port}/api/ventas`
   });
 
   after(async () => {
     await desconectar();
   });
 
+  beforeEach(() => {
+    borrarVentas()
+  })
+
+  afterEach(() => {
+    borrarVentas()
+  })
+
   describe("el servidor esta escuchando", () => {
     describe("al pedirle las ventas", () => {
       it("devuelve un array con ventas", async () => {
+
+        await agregarVenta(ventasTest[0])
+        await agregarVenta(ventasTest[1])
+
         const { data: ventasObtenidas, status } = await axios.get(
-          "http://localhost:3000/ventas"
+          urlVentas
         );
         assert.strictEqual(status, 200);
         const ventasReales = obtenerVentas();
@@ -26,16 +79,18 @@ describe("servidor de pruebas", () => {
       });
     });
 
-    describe("al pedirle una ventas por id", () => {
-        it("devuelve una venta", async () => {
-          const { data: ventaObtenida, status } = await axios.get(
-            "http://localhost:3000/ventas/1"
-          );
-          assert.strictEqual(status, 200);
-          const ventaReal = obtenerVentaPorId('1');
-          assert.deepStrictEqual(ventaObtenida, ventaReal);
-        });
+    describe("al pedirle una venta por id", () => {
+      it("devuelve una venta", async () => {
+        const ventaAgregada = await agregarVenta(ventasTest[0])
+
+        let ventaObtenida
+        const { data, status } = await axios.get(urlVentas + '/' + ventaAgregada.id);
+        assert.strictEqual(status, 200);
+
+        ventaObtenida = data
+        assert.deepStrictEqual(ventaObtenida, ventaAgregada);
       });
+    });
 
     describe("al mandarle una venta", () => {
       it("la agrega a las demas existentes", async () => {
@@ -51,7 +106,7 @@ describe("servidor de pruebas", () => {
           ],
         };
         const { data: ventaAgregada, status } = await axios.post(
-          "http://localhost:3000/ventas",
+          urlVentas,
           venta
         );
         assert.strictEqual(status, 201);
@@ -60,6 +115,18 @@ describe("servidor de pruebas", () => {
         assert.strictEqual(ventasDespues.length, ventasAntes.length + 1);
       });
     });
+
+    describe('al pedirle una carrera que no existe', () => {
+      it('lanza un error 404', async () => {
+        await assert.rejects(
+          axios.get(urlVentas + '/unIdQueNoExiste'),
+          error => {
+            assert.strictEqual(error.response.status, 404)
+            return true
+          }
+        )
+      })
+    })
 
     describe("al mandarle una venta mal formateada", () => {
       it("no agrega nada y devuelve un error", async () => {
@@ -70,7 +137,7 @@ describe("servidor de pruebas", () => {
         };
 
         await assert.rejects(
-          axios.post("http://localhost:3000/ventas", venta),
+          axios.post(urlVentas, venta),
           (error) => {
             assert.strictEqual(error.response.status, 400);
             return true;
@@ -81,5 +148,49 @@ describe("servidor de pruebas", () => {
         assert.deepStrictEqual(ventasDespues, ventasAntes);
       });
     });
+
+    describe("al intentar borrar una venta", () => {
+      describe("al pasarle el id de una venta existente", () => {
+        it("la remueve de las ventas existentes", async () => {
+          const ventaAgregada1 = await agregarVenta(ventasTest[0])
+
+          const { status } = await axios.delete(urlVentas + '/' + ventaAgregada1.id)
+          assert.strictEqual(status, 204)
+
+          const ventasDespues = obtenerVentas()
+          assert.ok(ventasDespues.every(v => v.id !== ventaAgregada1.id))
+        });
+      });
+
+      describe("al pasarle el id de una venta inexistente", () => {
+        it("devuelve un 404", async () => {
+          await assert.rejects(
+            axios.delete(urlVentas + '/unIdQueNoExiste'),
+            error => {
+              assert.strictEqual(error.response.status, 404)
+              return true
+            }
+          )
+        });
+      });
+    });
+
+    describe("Al actualizar una venta", () => {
+      describe('al mandarle un id existente y una venta valida', () => {
+        it('reemplaza la preexistente por la nueva', async () => {
+          const ventaAgregada1 = await agregarVenta(ventasTest[0])
+
+          const datosActualizados = ventasTest[1]
+
+          const { status } = await axios.put(urlVentas + '/' + ventaAgregada1.id, datosActualizados)
+          assert.strictEqual(status, 200)
+
+          const ventaBuscada = obtenerVentasPorId(ventaAgregada1.id)
+          datosActualizados.id = ventaBuscada.id
+          assert.deepStrictEqual(ventaBuscada, datosActualizados)
+        })
+      })
+    })    
   });
 });
+
