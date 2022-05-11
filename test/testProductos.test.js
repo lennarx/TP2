@@ -2,7 +2,10 @@ import assert from 'assert'
 import axios from 'axios'
 import { conectar, desconectar } from '../src/servidor.js'
 
-import { obtenerProductoPorId, obtenerProductos } from '../src/productos/productos.js'
+import { 
+  obtenerProductoPorId, obtenerProductos, 
+  agregarProducto, borrarProductos } 
+from '../src/productos/productos.js'
 
 const productosTest = [
   {
@@ -34,19 +37,33 @@ const productosTest = [
 
 //insertarProducto, borrarProductoSegunId, reemplazarProducto
 describe("servidor de pruebas", () => {
+  let urlProductos
+
   before(async () => {
-    await conectar();
+    const port = await conectar()
+    urlProductos = `http://localhost:${port}/api/productos`
   });
 
   after(async () => {
     await desconectar();
   });
 
+  beforeEach(() => {
+    borrarProductos()
+  })
+
+  afterEach(() => {
+    borrarProductos()
+  })
   describe("el servidor esta escuchando", () => {
     describe("al pedirle los Productos", () => {
       it("devuelve un array con Productos", async () => {
+        
+        await agregarProducto(productosTest[0])
+        await agregarProducto(productosTest[1])
+
         const { data: productosObtenidos, status } = await axios.get(
-          "http://localhost:3000/Productos"
+          urlProductos
         );
         assert.strictEqual(status, 200);
         const productosReales = obtenerProductos();
@@ -56,12 +73,14 @@ describe("servidor de pruebas", () => {
 
     describe("al pedirle un Producto por id", () => {
         it("devuelve un Producto", async () => {
-          const { data: productosObtenidos, status } = await axios.get(
-            "http://localhost:3000/Productos/1"
-          );
+          const productoAgregado = await agregarProducto(productosTest[0])
+
+          let productoObtenido
+          const { data, status } = await axios.get(urlProductos + '/' + productoAgregado.id);
           assert.strictEqual(status, 200);
-          const ventaReal = obtenerProductoPorId('1');
-          assert.deepStrictEqual(productosObtenidos, ventaReal);
+  
+          productoObtenido = data
+          assert.deepStrictEqual(productoObtenido, productoAgregado);
         });
       });
 
@@ -72,14 +91,14 @@ describe("servidor de pruebas", () => {
           productos: [
             {
               id: 1,
-              nombreProducto: "Mesa + sillas",
+              nombreProducto: 'Mesa + sillas',
               descripcionProducto: '1x1,60 - 4 sillas de madera - DecoHouse',
               precioProducto: 20000,
             },
           ],
         };
         const { data: productoAgregado, status } = await axios.post(
-          "http://localhost:3000/ventas",
+          "http://localhost:3000/productos",
           Producto
         );
         assert.strictEqual(status, 201);
@@ -94,11 +113,11 @@ describe("servidor de pruebas", () => {
         const prdocutosAntes = obtenerProductos();
         const producto = {
           id: 2,
-          catalogo: "Linea blanca",
+          catalogo: 'Linea blanca',
         };
 
         await assert.rejects(
-            axios.post('http://localhost:3000/productos', producto),
+            axios.post(urlProductos, producto),
             error => {
                 assert.strictEqual(error.response.status, 400)
                 return true
