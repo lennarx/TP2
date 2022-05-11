@@ -89,14 +89,9 @@ describe("servidor de pruebas", () => {
       it("lo agrega a los demas existentes", async () => {
         const productosAntes = obtenerProductos();
         const Producto = {
-          productos: [
-            {
-              id: 1,
-              nombreProducto: 'Mesa + sillas',
-              descripcionProducto: '1x1,60 - 4 sillas de madera - DecoHouse',
-              precioProducto: 20000,
-            },
-          ],
+          nombreProducto: 'Mesa + sillas',
+          descripcionProducto: '1x1,60 - 4 sillas de madera - DecoHouse',
+          precioProducto: 20000,
         };
         const { data: productoAgregado, status } = await axios.post(
           urlProductos,
@@ -113,8 +108,8 @@ describe("servidor de pruebas", () => {
       it("no agrega nada y devuelve un error", async () => {
         const prdocutosAntes = obtenerProductos();
         const producto = {
-          id : undefined,
-          bebida: 'coca
+          id: 2,
+          catalogo: 'Linea blanca',
         }
 
         await assert.rejects(
