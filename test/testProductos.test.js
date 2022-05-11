@@ -10,25 +10,21 @@ import {
 
 const productosTest = [
   {
-    id: 1,
     nombreProducto: 'Heladera',
     descripcionProducto: 'No Frost - 44 litros',
     precioProducto: 60000
   },
-  {
-    idProducto: 2,
+  {    
     nombreProducto: 'Microondas',
     descripcionProducto: 'Microondas - Horno Electrico - Grill - Función descongelar',
     precioProducto: 80000
   },
   {
-    idProducto: 3,
     nombreProducto: 'Cocina',
     descripcionProducto: 'Gas Natural - 6 hornallas - Convertible a Gas Envasado',
     precioProducto: 80000
   },
   {
-    idProducto: 4,
     nombreProducto: 'TV 60 Pulgadas',
     descripcionProducto: '60 Pulgadas - 3 lineas HDMI - Smart',
     precioProducto: 80000
@@ -124,5 +120,47 @@ describe("servidor de pruebas", () => {
         assert.deepStrictEqual(productosDespues, prdocutosAntes);
       });
     });
+    describe("al intentar borrar un producto", () => {
+      describe("al pasarle el id de un producto existente", () => {
+        it("lo remueve de los productos existentes", async () => {
+          const productoAgregado = await agregarProducto(productosTest[0])
+
+          const { status } = await axios.delete(urlProductos + '/' + productoAgregado.id)
+          assert.strictEqual(status, 204)
+
+          const productosDespues = obtenerProductos()
+          assert.ok(productosDespues.every(v => v.id !== productoAgregado.id))
+        });
+      });
+
+      describe("al pasarle el id de un producto inexistente", () => {
+        it("devuelve un 404", async () => {
+          await assert.rejects(
+            axios.delete(urlProductos + '/unIdQueNoExiste'),
+            error => {
+              assert.strictEqual(error.response.status, 404)
+              return true
+            }
+          )
+        });
+      });
+    });
+
+    describe("Al actualizar un producto", () => {
+      describe('al mandarle un id existente y un producto válido', () => {
+        it('reemplaza el preexistente por el nuevo', async () => {
+          const productoAgregado1 = await agregarProducto(productosTest[0])
+
+          const datosActualizados = productosTest[1]
+
+          const { status } = await axios.put(urlProductos + '/' + productoAgregado1.id, datosActualizados)
+          assert.strictEqual(status, 200)
+
+          const productoBuscado = obtenerProductoPorId(productoAgregado1.id)
+          datosActualizados.id = productoAgregado1.id
+          assert.deepStrictEqual(productoBuscado, datosActualizados)
+        })
+      })
+    })    
   });
 });
