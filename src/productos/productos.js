@@ -35,7 +35,7 @@ export function borrarProductoSegunId(id) {
     if (indiceBuscado === -1) {
         throw new Error('producto no encontrada')
     } else {
-        prosuctos.splice(indiceBuscado, 1)
+        productos.splice(indiceBuscado, 1)
     }
 }
 
