@@ -3,7 +3,7 @@ import { crearProducto } from "./Producto.js";
 const productos = []
 
 const copiarProducto = (producto) => {
-    return ({ id: producto.id, productos: producto.productos })
+    return ({ id: producto.id, nombreProducto: producto.nombreProducto, descripcionProducto: producto.descripcionProducto, precioProducto : producto.precioProducto })
 }
 
 const copiarProductos = (productos) => {
@@ -11,7 +11,7 @@ const copiarProductos = (productos) => {
 }
 
 export const obtenerProductos = () => {
-    return productos.map(e =>({productos: e.productos}));
+    return copiarProductos(productos);
 }
 
 export const agregarProducto = datosProducto => {
