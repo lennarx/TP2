@@ -2,8 +2,22 @@ import { crearProducto } from "./Producto.js";
 
 const productos = []
 
+const copiarProducto = (producto) => {
+    return ({ id: producto.id, nombreProducto: producto.nombreProducto, descripcionProducto: producto.descripcionProducto, precioProducto : producto.precioProducto })
+}
+
+const copiarProductos = (productos) => {
+    return productos.map(copiarProducto)
+}
+
 export const obtenerProductos = () => {
-    return productos.map(e =>({productos: e.productos}));
+    return copiarProductos(productos);
+}
+
+export const agregarProducto = datosProducto => {
+    const producto = crearProducto(datosProducto)
+    productos.push(producto)
+    return producto
 }
 
 export const obtenerProductoPorId = (idProducto) => {

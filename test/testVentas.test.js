@@ -116,7 +116,7 @@ describe("servidor de pruebas", () => {
       });
     });
 
-    describe('al pedirle una carrera que no existe', () => {
+    describe('al pedirle una venta que no existe', () => {
       it('lanza un error 404', async () => {
         await assert.rejects(
           axios.get(urlVentas + '/unIdQueNoExiste'),
@@ -138,7 +138,7 @@ describe("servidor de pruebas", () => {
 
         await assert.rejects(
           axios.post(urlVentas, venta),
-          (error) => {
+          error => {
             assert.strictEqual(error.response.status, 400);
             return true;
           }
