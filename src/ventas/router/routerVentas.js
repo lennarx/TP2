@@ -6,7 +6,7 @@ import {
     obtenerVentasPorId,
     borrarVentaPorId,
     reemplazarVenta
-} from './ventas.js'
+} from '../services/ventas.js'
 
 const routerVentas = new Router()
 
