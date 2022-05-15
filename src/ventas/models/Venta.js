@@ -1,4 +1,4 @@
-import { obtenerNuevoId } from '../compartidos/ids.js'
+import { obtenerNuevoId } from '../../compartidos/ids.js'
 
 export const crearVenta = (datos) => {
     if (!datos.productos) {

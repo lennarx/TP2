@@ -1,13 +1,12 @@
 import assert from "assert";
 import axios from "axios";
-import { borrarProductos } from "../src/productos/productos.js";
 import { conectar, desconectar } from "../src/servidor.js";
 
 import {
   obtenerVentas, agregarVenta,
   borrarVentas,
   obtenerVentasPorId
-} from '../src/ventas/ventas.js'
+} from '../src/ventas/services/ventas.js'
 
 const ventasTest = [
   {
