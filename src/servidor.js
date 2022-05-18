@@ -1,6 +1,7 @@
 import express from "express";
 import { routerVentas } from "./ventas/router/routerVentas.js";
 import { routerProductos } from "./productos/routerProductos.js";
+import {routerUsuarios} from "./usuarios/routerUsuarios.js";
 
 const app = express();
 
@@ -8,6 +9,7 @@ app.use(express.json());
 
 app.use('/api/ventas', routerVentas)
 app.use('/api/productos', routerProductos)
+app.use('/api/usuarios', routerUsuarios)
 
 let server;
 
