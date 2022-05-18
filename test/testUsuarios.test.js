@@ -6,30 +6,25 @@ import { agregarUsuario, obtenerUsuarios,
 
 const usuariosTest = [
     {
-        idUsuario:  1,
         nombre: "Pepe",
         apellido: "Bueno",
-        dirreccion: '9 de julio 233', 
+        direccion: '9 de julio 233', 
     },
     {
-        
-        idUsuario:  2,
         nombre: "Juan",
         apellido: "Perez",
-        dirreccion: 'corrientes 860',
+        direccion: 'corrientes 860',
     },
 
     {
-        idUsuario:  3,
         nombre: "Manuela",
         apellido: "Sosa",
-        dirreccion: 'corrientes 860',
+        direccion: 'corrientes 860',
     },
     {
-        idUsuario:  4,
         nombre: 'Papa',
         apellido: 'Francisco',
-        dirreccion: 'corrientes 860',
+        direccion: 'corrientes 860',
     },
 ]
 

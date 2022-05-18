@@ -10,7 +10,7 @@ import {
 
 const routerUsuarios = new Router()
 
-routerUsuarios.get('/', (res) => {
+routerUsuarios.get('/', (req, res) => {
     let usuarios
     usuarios = obtenerUsuarios()
     res.json(usuarios)

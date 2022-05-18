@@ -57,11 +57,7 @@ export function obtenerUsuariosPorId(id){
         }
     }
 
-export const reemplazarUsuarios = (id) => {
-
-}
-
-export function reemplazarProducto(id, datosDelUsuario) {
+export const reemplazarUsuarios = (id, datosDelUsuario) => {
     const indiceBuscado = usuarios.findIndex(u => u.id === id)
     if (indiceBuscado === -1) {
         throw new Error('usuario no encontrado')
@@ -71,3 +67,4 @@ export function reemplazarProducto(id, datosDelUsuario) {
         usuarios[indiceBuscado] = usuario
     }
 }
+

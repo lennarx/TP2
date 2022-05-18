@@ -1,8 +1,8 @@
 import { obtenerNuevoId } from '../compartidos/ids.js'
 
 export const crearUsuario = (datos) => {
-    if (datos == null) {
-        throw new Error('El usuario no puede ser nulo')
+    if (!datos.nombre || !datos.apellido) {
+        throw new Error('El usuario debe tener un nombre con apellido')
     }
 
     const usuario ={
