@@ -1,3 +1,12 @@
+import {
+    obtenerVentas,
+    agregarVenta,
+    obtenerVentasSegunUsuario,
+    obtenerVentasPorId,
+    borrarVentaPorId,
+    reemplazarVenta
+} from '../services/ventas.js'
+
 export const getVentaPorIdController = (req, res, next) => {
     try {
         const venta = obtenerVentasPorId(req.params.id)

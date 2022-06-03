@@ -1,16 +1,4 @@
 import { Router } from 'express'
-
-//Services imports
-import {
-    obtenerVentas,
-    agregarVenta,
-    obtenerVentasSegunUsuario,
-    obtenerVentasPorId,
-    borrarVentaPorId,
-    reemplazarVenta
-} from '../services/ventas.js'
-
-//Controller imports
 import{
     getVentaPorIdController,
     getVentasController,
