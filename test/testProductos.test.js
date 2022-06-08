@@ -6,7 +6,7 @@ import {
   obtenerProductoPorId, obtenerProductos,
   agregarProducto, borrarProductos
 }
-  from '../src/productos/productos.js'
+  from '../src/productos/services/productos.js'
 
 const productosTest = [
   {

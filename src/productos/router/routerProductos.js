@@ -5,7 +5,7 @@ import {
     getProductosController,
     postProductoController,
     putProductoController
-} from './ProductosController.js'
+} from '../controller/ProductosController.js'
 
 const routerProductos = new Router()
 

@@ -1,5 +1,5 @@
-import { crearProducto } from "./Producto.js";
-import dao from '../productos/database/productosDao.js';
+import { crearProducto } from "../models/Producto.js";
+import dao from '../database/productosDao.js';
 
 export const obtenerProductos = () => {
     return dao.recuperarProductos();

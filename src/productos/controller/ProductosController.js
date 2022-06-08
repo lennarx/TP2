@@ -4,7 +4,7 @@ import {
     insertarProducto,
     borrarProductoSegunId,
     reemplazarProducto,
-} from './productos.js'
+} from '../services/productos.js'
 
 export const getProductosController = (req, res, next) => {
     let productos
