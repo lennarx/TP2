@@ -1,57 +1,36 @@
 import { crearProducto } from "./Producto.js";
-
-const productos = []
-
-const copiarProducto = (producto) => {
-    return ({ id: producto.id, nombreProducto: producto.nombreProducto, descripcionProducto: producto.descripcionProducto, precioProducto : producto.precioProducto })
-}
-
-const copiarProductos = (productos) => {
-    return productos.map(copiarProducto)
-}
+import dao from '../productos/database/productosDao.js';
 
 export const obtenerProductos = () => {
-    return copiarProductos(productos);
+    return dao.recuperarProductos();
 }
 
 export const agregarProducto = datosProducto => {
     const producto = crearProducto(datosProducto)
-    productos.push(producto)
+    dao.guardarProducto(producto)
     return producto
 }
 
 export const obtenerProductoPorId = (idProducto) => {
-    return productos.find(p => p.id.toString() === idProducto)
+    return dao.obtenerProductoPorId(idProducto)
 }
 
 export const insertarProducto = (productoNuevo) => {
     const producto = crearProducto(productoNuevo)
-    productos.push(producto)
-    return producto    
+    dao.guardarProducto(producto)
+    return producto  
 }
 
 export function borrarProductoSegunId(id) {
-    const indiceBuscado = productos.findIndex(c => c.id === id)
-    if (indiceBuscado === -1) {
-        throw new Error('producto no encontrada')
-    } else {
-        productos.splice(indiceBuscado, 1)
-    }
+    dao.borrarProductoPorId(id)
 }
 
 export function reemplazarProducto(id, datosProducto) {
-    const indiceBuscado = productos.findIndex(c => c.id === id)
-    if (indiceBuscado === -1) {
-        throw new Error('carrera no encontrada')
-    } else {
-        const producto = crearProducto(datosProducto)
-        producto.id = id
-        productos[indiceBuscado] = producto
-    }
+   const producto = crearProducto(datosProducto)
+   producto.id = id
+   dao.guardarProducto(producto)
 }
 
 export const borrarProductos = () => {
-    while (productos.length > 0) {
-        productos.pop()
-    }
+   dao.borrarProductos()
 }

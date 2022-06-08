@@ -1,7 +1,7 @@
 const productos = [];
 
 const copiarProducto = (producto) => {
-    return ({ id: producto.id, idUsuario: producto.idUsuario, productos: producto.productos })
+    return ({ id: producto.id, nombreProducto: producto.nombreProducto, descripcionProducto: producto.descripcionProducto, precioProducto: producto.precioProducto })
 }
 
 const copiarProductos = (productos) => {
