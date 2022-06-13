@@ -28,7 +28,7 @@ export const borrarProductos = () => {
 }
 
 export const obtenerProductoPorId = idProducto => {
-    const productoBuscado = productos.find(v => p.id.toString() === idProducto)
+    const productoBuscado = productos.find(p => p.id.toString() === idProducto)
     if (productoBuscado) {
         return copiarProducto(productoBuscado)
     } else {
