@@ -1,36 +1,36 @@
 import { crearProducto } from "../models/Producto.js";
 import dao from '../database/productosDao.js';
 
-export const obtenerProductos = () => {
-    return dao.recuperarProductos();
+export async function obtenerProductos() {
+    return await dao.recuperarProductos();
 }
 
-export const agregarProducto = datosProducto => {
+export async function agregarProducto(datosProducto){
     const producto = crearProducto(datosProducto)
-    dao.guardarProducto(producto)
+    await dao.guardarProducto(producto)
     return producto
 }
 
-export const obtenerProductoPorId = (idProducto) => {
-    return dao.obtenerProductoPorId(idProducto)
+export async function obtenerProductoPorId(idProducto) {
+    return await dao.obtenerProductoPorId(idProducto)
 }
 
-export const insertarProducto = (productoNuevo) => {
+export async function insertarProducto(productoNuevo){
     const producto = crearProducto(productoNuevo)
-    dao.guardarProducto(producto)
+    await dao.guardarProducto(producto)
     return producto  
 }
 
-export function borrarProductoSegunId(id) {
-    dao.borrarProductoPorId(id)
+export async function borrarProductoSegunId(id) {
+    await dao.borrarProductoPorId(id)
 }
 
-export function reemplazarProducto(id, datosProducto) {
+export async function reemplazarProducto(id, datosProducto) {
    const producto = crearProducto(datosProducto)
    producto.id = id
-   dao.guardarProducto(producto)
+   await dao.guardarProducto(producto)
 }
 
-export const borrarProductos = () => {
-   dao.borrarProductos()
+export async function borrarProductos() {
+   await dao.borrarProductos()
 }

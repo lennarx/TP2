@@ -6,27 +6,27 @@ import {
     reemplazarProducto,
 } from '../services/productos.js'
 
-export const getProductosController = (req, res, next) => {
+export async function getProductosController(req, res, next) {
     let productos
 
-    productos = obtenerProductos()
+    productos = await obtenerProductos()
 
     res.json(productos)
 }
 
-export const getProductoPorIdController = (req, res, next) => {
+export async function getProductoPorIdController(req, res, next) {
     try {
-        const producto = obtenerProductoPorId(req.params.id)
+        const producto = await obtenerProductoPorId(req.params.id)
         res.json(producto)
     } catch (error) {
         res.status(404).json({ error: error.message })
     }
 }
 
-export const postProductoController = (req, res, next) => {
+export async function postProductoController(req, res, next){
     try {
         const producto = req.body
-        const productoAgregado = insertarProducto(producto)
+        const productoAgregado = await insertarProducto(producto)
         res.status(201).json(productoAgregado)
     } catch (error) {
         res.status(400).json({ error: error.message })
@@ -34,19 +34,19 @@ export const postProductoController = (req, res, next) => {
 
 }
 
-export const deleteProductoController = (req, res, next) => {
+export async function deleteProductoController(req, res, next){
     try {
-        borrarProductoSegunId(req.params.id)
+        await borrarProductoSegunId(req.params.id)
         res.sendStatus(204)
     } catch (error) {
         res.status(404).json({ error: error.message })
     }
 }
 
-export const putProductoController = (req, res, next) => {
+export async function putProductoController(req, res, next){
     try {
         const datosActualizados = req.body
-        const productoActualizado = reemplazarProducto(req.params.id, datosActualizados)
+        const productoActualizado = await reemplazarProducto(req.params.id, datosActualizados)
         res.json(productoActualizado)
     } catch (error) {
         if (error.tipo == 'not found') {
