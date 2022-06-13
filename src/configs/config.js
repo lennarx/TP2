@@ -1,1 +1,1 @@
-export const MODO_PERSISTENCIA = 'MEMORIA'
+export const MODO_PERSISTENCIA = 'DB'
