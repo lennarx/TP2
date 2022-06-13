@@ -70,7 +70,7 @@ describe("servidor de pruebas", () => {
 
     describe("al pedirle un Producto por id", () => {
       it("devuelve un Producto", async () => {
-        const productoAgregado = await agregarProducto(productosTest[0])
+        const productoAgregado = agregarProducto(productosTest[0])
 
         let productoObtenido
         const { data, status } = await axios.get(urlProductos + '/' + productoAgregado.id);
