@@ -2,7 +2,7 @@ import assert from 'assert';
 import { conectar, desconectar } from "../src/servidor.js";
 import axios from "axios";
 import { agregarUsuario, obtenerUsuarios,
-    obtenerUsuariosPorId, borrarUsuarios } from "../src/usuarios/usuarios.js";
+    obtenerUsuariosPorId, borrarUsuarios } from "../src/usuarios/services/usuarios.js";
 
 const usuariosTest = [
     {
@@ -62,7 +62,7 @@ describe("servidor de pruebas", () => {
             urlUsuarios
           );
           assert.strictEqual(status, 200);
-          const usuariosReales = obtenerUsuarios();
+          const usuariosReales = await obtenerUsuarios();
           assert.deepStrictEqual(usuariosObtenidos, usuariosReales);
         });
 
@@ -83,7 +83,7 @@ describe("servidor de pruebas", () => {
 
     describe("al mandarle un usuario", () => {
         it("la agrega a los demas existentes", async () => {
-          const usuariosPrevios = obtenerUsuarios();
+          const usuariosPrevios = await obtenerUsuarios();
           const usuario = {
                 idUsuario:  5,
                 nombre: "pepito",
@@ -96,7 +96,7 @@ describe("servidor de pruebas", () => {
           );
           assert.strictEqual(status, 201);
   
-          const usuariosPosteriores = obtenerUsuarios();
+          const usuariosPosteriores = await obtenerUsuarios();
           assert.strictEqual(usuariosPosteriores.length, usuariosPrevios.length + 1);
         });
     });
@@ -115,7 +115,7 @@ describe("servidor de pruebas", () => {
 
     describe("al mandarle un usuario mal formateado", () => {
         it("no agrega nada y devuelve un error", async () => {
-          const usuariosPrevios = obtenerUsuarios();
+          const usuariosPrevios = await obtenerUsuarios();
           const usuario = {
             id: 2,
             apellido: "sanchez",
@@ -128,7 +128,7 @@ describe("servidor de pruebas", () => {
             }
           );
   
-          const usuariosPosteriores = obtenerUsuarios();
+          const usuariosPosteriores = await obtenerUsuarios();
           assert.deepStrictEqual(usuariosPrevios, usuariosPosteriores);
         });
     });
@@ -141,7 +141,7 @@ describe("servidor de pruebas", () => {
             const { status } = await axios.delete(urlUsuarios + '/' + usuarioAgredo1.id)
             assert.strictEqual(status, 204)
   
-            const usuariosPosteriores = obtenerUsuarios()
+            const usuariosPosteriores = await obtenerUsuarios()
             assert.ok(usuariosPosteriores.every(u => u.id !== usuarioAgredo1.id))
         });
     });
@@ -168,7 +168,7 @@ describe("servidor de pruebas", () => {
             const { status } = await axios.put(urlUsuarios + '/' + usuarioAgregado1.id, datosActualizados)
             assert.strictEqual(status, 200)
   
-            const usuarioBuscado = obtenerUsuariosPorId(usuarioAgregado1.id)
+            const usuarioBuscado = await obtenerUsuariosPorId(usuarioAgregado1.id)
             datosActualizados.id = usuarioBuscado.id
             assert.deepStrictEqual(usuarioBuscado, datosActualizados)
           })

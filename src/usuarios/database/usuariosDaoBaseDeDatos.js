@@ -12,7 +12,7 @@ export async function guadarUsuario(usuario) {
     return
 }
 
-export async function obtenerUsuariosSegunId(id) {
+export async function obtenerUsuariosPorId(id) {
     const usuarioBuscado = await usuarios.findOne({ id }, { projection: { _id: 0 } })
     if (usuarioBuscado) {
         return usuarioBuscado

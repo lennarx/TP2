@@ -1,5 +1,5 @@
 import { crearUsuario } from "../models/usuario.js";
-import dao from '../database/usuarioDao.js';
+import dao from '../database/usuariosDao.js';
 
 export async function obtenerUsuarios(){
     return await dao.recuperarUsuarios();
@@ -7,7 +7,7 @@ export async function obtenerUsuarios(){
 
 export async function agregarUsuario(datosUsuario){
     const usuario = crearUsuario(datosUsuario);
-    await dao.guardarusuarios(usuario)
+    await dao.guadarUsuario(usuario)
     return usuario;
 }
 
@@ -31,5 +31,5 @@ export async function borrarUsuariosPorId(idUsuario){
 export async function reemplazarUsuarios(id, datosDelUsuario){
     const usuario = crearUsuario(datosDelUsuario)
     usuario.id = id
-    await dao.guardarusuarios(usuario)
+    await dao.guadarUsuario(usuario)
 }

@@ -18,7 +18,7 @@ export async function recuperarUsuarios() {
 }
 
 export async function guadarUsuario(usuario){
-    const indiceBuscado = usuario.findIndex(u => u.id === usuario.id)
+    const indiceBuscado = usuarios.findIndex(u => u.id === usuario.id)
     if (indiceBuscado === -1) {
         usuarios.push(usuario)
     } else {
