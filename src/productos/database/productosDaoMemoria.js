@@ -8,11 +8,11 @@ const copiarProductos = (productos) => {
     return productos.map(copiarProducto)
 }
 
-export const recuperarProductos = () => {
+export async function recuperarProductos(){
     return copiarProductos(productos)
 }
 
-export const guardarProducto = (producto) => {
+export async function guardarProducto(producto) {
     const indiceBuscado = productos.findIndex(p => p.id === producto.id)
     if (indiceBuscado === -1) {
         productos.push(producto)
@@ -21,14 +21,14 @@ export const guardarProducto = (producto) => {
     }
 }
 
-export const borrarProductos = () => {
+export async function borrarProductos(){
     while (productos.length > 0) {
         productos.pop()
     }
 }
 
-export const obtenerProductoPorId = idProducto => {
-    const productoBuscado = productos.find(v => p.id.toString() === idProducto)
+export async function obtenerProductoPorId(idProducto) {
+    const productoBuscado = productos.find(p => p.id.toString() === idProducto)
     if (productoBuscado) {
         return copiarProducto(productoBuscado)
     } else {
@@ -36,7 +36,7 @@ export const obtenerProductoPorId = idProducto => {
     }
 }
 
-export const borrarProductoPorId = (idProducto) => {
+export async function borrarProductoPorId(idProducto){
     const indiceBuscado = productos.findIndex(c => c.id === idProducto)
     if (indiceBuscado === -1) {
         throw new Error('Producto no encontrado')

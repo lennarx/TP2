@@ -8,11 +8,11 @@ const copiarVentas = (ventas) => {
     return ventas.map(copiarVenta)
 }
 
-export const recuperarvVentas = () => {
+export async function recuperarVentas(){
     return copiarVentas(ventas)
 }
 
-export const guardarVenta = (venta) => {
+export async function guardarVenta(venta) {
     const indiceBuscado = ventas.findIndex(v => v.id === venta.id)
     if (indiceBuscado === -1) {
         ventas.push(venta)
@@ -21,18 +21,18 @@ export const guardarVenta = (venta) => {
     }
 }
 
-export const borrarVentas = () => {
+export async function borrarVentas(){
     while (ventas.length > 0) {
         ventas.pop()
     }
 }
 
-export const obtenerVentasSegunUsuario = (idUsuario) => {
+export async function obtenerVentasSegunUsuario(idUsuario) {
     const ventasBuscadas = ventas.filter(x => x.idUsuario === idUsuario)
     return copiarVentas(ventasBuscadas)
 }
 
-export const obtenerVentaPorId = idVenta => {
+export async  function obtenerVentaPorId(idVenta){
     const ventaBuscada = ventas.find(v => v.id.toString() === idVenta)
     if (ventaBuscada) {
         return copiarVenta(ventaBuscada)
@@ -41,7 +41,7 @@ export const obtenerVentaPorId = idVenta => {
     }
 }
 
-export const borrarVentaPorId = (idVenta) => {
+export async function borrarVentaPorId(idVenta){
     const indiceBuscado = ventas.findIndex(c => c.id === idVenta)
     if (indiceBuscado === -1) {
         throw new Error('Venta no encontrada')

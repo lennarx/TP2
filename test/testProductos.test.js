@@ -63,7 +63,7 @@ describe("servidor de pruebas", () => {
           urlProductos
         );
         assert.strictEqual(status, 200);
-        const productosReales = obtenerProductos();
+        const productosReales = await obtenerProductos();
         assert.deepStrictEqual(productosObtenidos, productosReales);
       });
     });
@@ -83,7 +83,7 @@ describe("servidor de pruebas", () => {
 
     describe("al mandarle un Producto", () => {
       it("lo agrega a los demas existentes", async () => {
-        const productosAntes = obtenerProductos();
+        const productosAntes = await obtenerProductos();
         const Producto = {
           nombreProducto: 'Mesa + sillas',
           descripcionProducto: '1x1,60 - 4 sillas de madera - DecoHouse',
@@ -95,14 +95,14 @@ describe("servidor de pruebas", () => {
         );
         assert.strictEqual(status, 201);
 
-        const prodcutosDespues = obtenerProductos();
+        const prodcutosDespues = await obtenerProductos();
         assert.strictEqual(prodcutosDespues.length, productosAntes.length + 1);
       });
     });
 
     describe("al mandarle un Producto mal formateada", () => {
       it("no agrega nada y devuelve un error", async () => {
-        const prdocutosAntes = obtenerProductos();
+        const prdocutosAntes = await obtenerProductos();
         const producto = {
           id: 2,
           catalogo: 'Linea blanca',
@@ -116,7 +116,7 @@ describe("servidor de pruebas", () => {
           }
         );
 
-        const productosDespues = obtenerProductos();
+        const productosDespues = await obtenerProductos();
         assert.deepStrictEqual(productosDespues, prdocutosAntes);
       });
     });
@@ -128,7 +128,7 @@ describe("servidor de pruebas", () => {
           const { status } = await axios.delete(urlProductos + '/' + productoAgregado.id)
           assert.strictEqual(status, 204)
 
-          const productosDespues = obtenerProductos()
+          const productosDespues = await obtenerProductos()
           assert.ok(productosDespues.every(v => v.id !== productoAgregado.id))
         });
       });
@@ -156,7 +156,7 @@ describe("servidor de pruebas", () => {
           const { status } = await axios.put(urlProductos + '/' + productoAgregado1.id, datosActualizados)
           assert.strictEqual(status, 200)
 
-          const productoBuscado = obtenerProductoPorId(productoAgregado1.id)
+          const productoBuscado = await obtenerProductoPorId(productoAgregado1.id)
           datosActualizados.id = productoAgregado1.id
           assert.deepStrictEqual(productoBuscado, datosActualizados)
         })

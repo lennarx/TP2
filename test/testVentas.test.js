@@ -73,7 +73,7 @@ describe("servidor de pruebas", () => {
           urlVentas
         );
         assert.strictEqual(status, 200);
-        const ventasReales = obtenerVentas();
+        const ventasReales = await obtenerVentas();
         assert.deepStrictEqual(ventasObtenidas, ventasReales);
       });
     });
@@ -93,7 +93,7 @@ describe("servidor de pruebas", () => {
 
     describe("al mandarle una venta", () => {
       it("la agrega a las demas existentes", async () => {
-        const ventasAntes = obtenerVentas();
+        const ventasAntes = await obtenerVentas();
         const venta = {
           idUsuario: 1,
           productos: [
@@ -110,7 +110,7 @@ describe("servidor de pruebas", () => {
         );
         assert.strictEqual(status, 201);
 
-        const ventasDespues = obtenerVentas();
+        const ventasDespues = await obtenerVentas();
         assert.strictEqual(ventasDespues.length, ventasAntes.length + 1);
       });
     });
@@ -129,7 +129,7 @@ describe("servidor de pruebas", () => {
 
     describe("al mandarle una venta mal formateada", () => {
       it("no agrega nada y devuelve un error", async () => {
-        const ventasAntes = obtenerVentas();
+        const ventasAntes = await obtenerVentas();
         const venta = {
           id: 2,
           catalogo: "Linea blanca",
@@ -143,7 +143,7 @@ describe("servidor de pruebas", () => {
           }
         );
 
-        const ventasDespues = obtenerVentas();
+        const ventasDespues = await obtenerVentas();
         assert.deepStrictEqual(ventasDespues, ventasAntes);
       });
     });
@@ -156,7 +156,7 @@ describe("servidor de pruebas", () => {
           const { status } = await axios.delete(urlVentas + '/' + ventaAgregada1.id)
           assert.strictEqual(status, 204)
 
-          const ventasDespues = obtenerVentas()
+          const ventasDespues = await obtenerVentas()
           assert.ok(ventasDespues.every(v => v.id !== ventaAgregada1.id))
         });
       });
@@ -184,7 +184,7 @@ describe("servidor de pruebas", () => {
           const { status } = await axios.put(urlVentas + '/' + ventaAgregada1.id, datosActualizados)
           assert.strictEqual(status, 200)
 
-          const ventaBuscada = obtenerVentasPorId(ventaAgregada1.id)
+          const ventaBuscada = await obtenerVentasPorId(ventaAgregada1.id)
           datosActualizados.id = ventaBuscada.id
           assert.deepStrictEqual(ventaBuscada, datosActualizados)
         })
