@@ -8,9 +8,9 @@ switch (MODO_PERSISTENCIA) {
     case 'ARCHIVO':
         dao = daoArchivos
         break
-    case 'DB':
-        dao = daoDb
-        break
+    // case 'DB':
+    //     dao = daoDb
+    //     break
     default:
         dao = daoMemoria
 }
