@@ -1,8 +1,9 @@
 import { Router } from 'express'
+
 import {
     postLoginController,
     postRegisterController
-} from '../midddleware.js'
+} from '../controller/loginController'
 
 const routerLogin = new Router()
 
