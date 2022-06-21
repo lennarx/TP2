@@ -3,11 +3,11 @@ import { Router } from 'express'
 import {
     postLoginController,
     postRegisterController
-} from '../controller/loginController'
+} from '../controller/loginController.js'
 
 const routerLogin = new Router()
 
-routerLogin.post('/:login',postLoginController)
-routerLogin.post('/:register',postRegisterController)
+routerLogin.post('/',postLoginController)
+routerLogin.post('/register',postRegisterController)
 
 export { routerLogin }                                  

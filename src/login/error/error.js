@@ -2,7 +2,7 @@
 //=========================
 // # manejoErrores.js
 
-function manejadorDeErrores(error, req, res) {
+export function manejadorDeErrores(error, req, res) {
     switch (error.tipo) {
         case 'NOT_AUTHENTICATED':
             res.status(401)

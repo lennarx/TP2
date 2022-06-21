@@ -76,17 +76,17 @@ app.post('/register', (req, res) => {
     res.send('registro ok')
 })
 
-app.post('/login', (req, res) => {
-    const { username, password } = req.body
-    const user = getUser(username)
-    if (!user) {
-        return res.status(401).send('fallo autenticacion')
-    }
-    if (user.password !== password) {
-        return res.status(401).send('fallo autenticacion')
-    }
-    const token = codificar({ username })
-    res.json({ token })
-})
+// app.post('/login', (req, res) => {
+//     const { username, password } = req.body
+//     const user = getUser(username)
+//     if (!user) {
+//         return res.status(401).send('fallo autenticacion')
+//     }
+//     if (user.password !== password) {
+//         return res.status(401).send('fallo autenticacion')
+//     }
+//     const token = codificar({ username })
+//     res.json({ token })
+// })
 
 app.use(manejadorDeErrores)

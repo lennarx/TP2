@@ -1,6 +1,6 @@
 import {
     manejadorDeErrores
-} from '../error/error'
+} from '../error/error.js'
 
 //========================================
 // # auth.js
@@ -13,7 +13,7 @@ function codificar(objeto) {
     const token = jwt.sign(objeto, PALABRA_CLAVE);
     return token
 }
-        
+
 function decodificar(token) {
     const objeto = jwt.verify(token, PALABRA_CLAVE)
     return objeto
@@ -29,8 +29,10 @@ function createUser(datos) {
 }
 
 const usuarios = [
-    username = 'TITO',
-    password = 123
+    {
+        username : 'TITO',
+        password : '123'
+    }
 ]
 
 function saveUser(user) {
@@ -48,16 +50,17 @@ export function postRegisterController(req, res, next) {
 }
 
 export function postLoginController(req, res, next) {
-    const { username, password } = req.body
-    const user = getUser(username)
+    const userReq = req.body
+    const user = getUser(userReq.username)
     if (!user) {
         return res.status(401).send('fallo autenticacion')
     }
-    if (user.password !== password) {
+    if (user.password !== userReq.password) {
         return res.status(401).send('fallo autenticacion')
     }
+    const username = userReq.username
     const token = codificar({ username })
     res.json({ token })
 }
 
-app.use(manejadorDeErrores)
+// app.use(manejadorDeErrores)
