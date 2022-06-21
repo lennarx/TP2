@@ -1,4 +1,4 @@
-import { obtenerNuevoId } from '../compartidos/ids.js'
+import { obtenerNuevoId } from '../../compartidos/ids.js'
 
 export const crearUsuario = (datos) => {
     if (!datos.nombre || !datos.apellido) {

@@ -1,35 +1,35 @@
 import { crearUsuario } from "../models/usuario.js";
-import dao from '../database/usuarioDao.js';
+import dao from '../database/usuariosDao.js';
 
-export const obtenerUsuarios = () => {
-    return dao.recuperarUsuarios();
+export async function obtenerUsuarios(){
+    return await dao.recuperarUsuarios();
 }
 
-export const agregarUsuario = datosUsuario => {
+export async function agregarUsuario(datosUsuario){
     const usuario = crearUsuario(datosUsuario);
-    dao.guardarusuarios(usuario)
+    await dao.guadarUsuario(usuario)
     return usuario;
 }
 
-export const borrarUsuarios = () => {
-    return dao.borrarUsuarios()
+export async function borrarUsuarios(){
+    return await dao.borrarUsuarios()
 }
 
-export const obtenerUsuariosSegunNombre = (nombreUsuario) => {
-    const usuariosBuscados = usuarios.filter(u => u.nombre === nombreUsuario)
-    return copiarUsuarios (usuariosBuscados);
+// export async function obtenerUsuariosSegunNombre(nombreUsuario){
+   
+//     return copiarUsuarios (usuariosBuscados);
+// }
+
+export async function obtenerUsuariosPorId(idUsuario){
+    return await dao.obtenerUsuariosPorId(idUsuario)
 }
 
-export const obtenerUsuariosPorId = (idUsuario) => {
-    return dao.obtenerUsuariosPorId(idUsuario)
+export async function borrarUsuariosPorId(idUsuario){
+    return await dao.borrarUsuariosPorId(idUsuario)
 }
 
-export const borrarUsuariosPorId = (idUsuario) => {
-    return dao.borrarUsuariosPorId(idUsuario)
-}
-
-export const reemplazarUsuarios = (id, datosDelUsuario) => {
+export async function reemplazarUsuarios(id, datosDelUsuario){
     const usuario = crearUsuario(datosDelUsuario)
     usuario.id = id
-    dao.guardarusuarios(usuario)
+    await dao.guadarUsuario(usuario)
 }

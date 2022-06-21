@@ -13,12 +13,12 @@ const copiarUsuarios = (usuarios) => {
     return usuarios.map(copiarUsuario)
 }
 
-export const recuperarUsuarios = () => {
+export async function recuperarUsuarios() {
     return copiarUsuarios(usuarios)
 }
 
-export const guadarUsuario = (usuario) => {
-    const indiceBuscado = usuario.findIndex(u => u.id === usuario.id)
+export async function guadarUsuario(usuario){
+    const indiceBuscado = usuarios.findIndex(u => u.id === usuario.id)
     if (indiceBuscado === -1) {
         usuarios.push(usuario)
     } else {
@@ -27,18 +27,18 @@ export const guadarUsuario = (usuario) => {
 
 }
 
-export const borrarUsuarios = () => {
+export async function borrarUsuarios(){
     while (usuarios.length > 0) {
         usuarios.pop()
     }
 }
 
-export const obtenerUsuariosSegunId = (idUsuario) => {
+export async function obtenerUsuariosSegunId(idUsuario){
     const usuariosBuscados = usuarios.filter(u => u.idUsuario === idUsuario)
     return copiarVentas(usuariosBuscados)
 }
 
-export function obtenerUsuariosPorId(id){
+export async function obtenerUsuariosPorId(id){
 
     const usuarioBuscado = usuarios.find(u=> u.id === id);
     
@@ -51,7 +51,7 @@ export function obtenerUsuariosPorId(id){
 }
 
 
-export const borrarUsuariosPorId = (id) => {
+export async function borrarUsuariosPorId(id){
 
     const indiceBuscado = usuarios.findIndex(u => u.id === id)
     if (indiceBuscado === -1) {
@@ -62,7 +62,7 @@ export const borrarUsuariosPorId = (id) => {
 }
 
 
-export const agregarUsuario = (usuario) => {
+export async function agregarUsuario(usuario){
    
     const usuarioCreado = crearUsuario(usuario);
     
