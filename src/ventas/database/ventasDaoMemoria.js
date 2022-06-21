@@ -1,3 +1,5 @@
+import { crearErrorRecursoNoEncontrado } from '../../shared/errors/models/ErrorRecursoNoEncontrado.js'
+
 const ventas = [];
 
 const copiarVenta = (venta) => {
@@ -37,14 +39,14 @@ export async  function obtenerVentaPorId(idVenta){
     if (ventaBuscada) {
         return copiarVenta(ventaBuscada)
     } else {
-        throw new Error('Venta no encontrada')
+        throw crearErrorRecursoNoEncontrado('venta')
     }
 }
 
 export async function borrarVentaPorId(idVenta){
     const indiceBuscado = ventas.findIndex(c => c.id === idVenta)
     if (indiceBuscado === -1) {
-        throw new Error('Venta no encontrada')
+        throw crearErrorRecursoNoEncontrado('venta')
     } else {
         ventas.splice(indiceBuscado, 1)
     }
