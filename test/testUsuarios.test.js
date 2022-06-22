@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { conectar, desconectar } from "../src/servidor.js";
+import { conectar, desconectar } from '../src/server/servidor.js'
 import axios from "axios";
 import { agregarUsuario, obtenerUsuarios,
     obtenerUsuariosPorId, borrarUsuarios } from "../src/usuarios/services/usuarios.js";

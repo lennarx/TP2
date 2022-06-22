@@ -1,8 +1,9 @@
-import { obtenerNuevoId } from "../../compartidos/ids.js";
+import { obtenerNuevoId } from '../../shared/ids/ids.js'
+import { crearErrorDeDatosFaltantes } from '../../shared/errors/models/ErrorDeDatosFaltantes.js'
 
 export const crearProducto = (datos) => {
   if (!datos.nombreProducto) {
-    throw new Error("Producto no puede ser nulo");
+    throw crearErrorDeDatosFaltantes('nombreProducto')
   }
 
   const producto = {

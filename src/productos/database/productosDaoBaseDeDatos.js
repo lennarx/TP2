@@ -1,40 +1,61 @@
-import { MongoClient } from "mongodb"
-const uri = "mongodb://localhost:27017";
-const client = new MongoClient(uri);
+import {crearErrorRecursoNoEncontrado} from '../../shared/errors/models/ErrorRecursoNoEncontrado.js'
+import { crearErrorDePersistencia } from '../../shared/errors/models/ErrorDePersistencia.js';
+import { database } from '../../shared/databases/mongoDbClient.js';
 
-await client.connect();
-
-const database = client.db('TP2');
 const productos = database.collection('Productos');
 
 export async function guardarProducto(producto) {
-    const result = await productos.updateOne({ id: producto.id }, { $set: producto }, { upsert: true })
-    return
+    try{
+        await productos.updateOne({ id: producto.id }, { $set: producto }, { upsert: true })
+    } catch(error){
+        throw crearErrorDePersistencia()
+    }
+    
 }
 
 export async function obtenerProductoPorId(id) {
-    const productoBuscado = await productos.findOne({ id }, { projection: { _id: 0 } })
-    if (productoBuscado) {
-        return productoBuscado
-    } else {
-        throw Error('')
+    let productoBuscado 
+    try{
+        productoBuscado = await productos.findOne({ id }, { projection: { _id: 0 } })
+    } catch(error){
+        throw crearErrorDePersistencia()
     }
-}
+    if (!productoBuscado) {
+        throw crearErrorRecursoNoEncontrado('venta')
+    } 
+    return productoBuscado
+ }
+
 
 export async function recuperarProductos() {
-    const productosArray = await productos.find().project({ _id: 0 }).toArray();
-    return productosArray
+    try{
+        const productosArray = await productos.find().project({ _id: 0 }).toArray();
+        return productosArray
+    } catch (error){
+        throw crearErrorDePersistencia()
+    }
+    
 }
 
 export async function borrarProductoPorId(id) {
-    const result = await productos.deleteOne({ id })
+    let result 
+    try{
+        result = await productos.deleteOne({ id })
+    } catch(error) {
+        throw crearErrorDePersistencia()
+    }
     if (result.deletedCount === 0) {
-        throw Error('')
+        throw crearErrorRecursoNoEncontrado('producto')
     }
 }
 
 export async function borrarProductos() {
-    await productos.deleteMany({})
+    try{
+       await productos.deleteMany({}) 
+    } catch(error){
+        throw crearErrorDePersistencia()
+    }
+    
 }
 
 // export async function nombreEstaDisponible(nombre) {

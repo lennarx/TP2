@@ -1,6 +1,7 @@
 import assert from 'assert'
 import axios from 'axios'
-import { conectar, desconectar } from '../src/servidor.js'
+import { conectar, desconectar } from '../src/server/servidor.js'
+
 
 import {
   obtenerProductoPorId, obtenerProductos,
