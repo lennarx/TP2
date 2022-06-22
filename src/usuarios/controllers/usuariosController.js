@@ -17,7 +17,7 @@ export async function getUsuarioByIdController(req,res,next){
         const usuario = await obtenerUsuariosPorId(req.params.id)
         res.json(usuario)
     } catch (error) {
-        res.status(404).json({ error: error.message })
+        next(error)
     }
 }
 
@@ -27,7 +27,7 @@ export async function postUsuarioController(req, res, next){
         const usuarioAgregado = await agregarUsuario(usuario)
         res.status(201).json(usuarioAgregado)
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        next(error)
     }
 }
 
@@ -36,7 +36,7 @@ export async function deleteUsuarioController(req, res, next){
         await borrarUsuariosPorId(req.params.id)
         res.sendStatus(204)
     } catch (error) {
-        res.status(404).json({ error: error.message })
+        next(error)
     }
 }
 
@@ -46,10 +46,6 @@ export async function putUsuarioController(req, res, next){
         const usuarioActualizado = await reemplazarUsuarios(req.params.id, datosActualizados)
         res.json(usuarioActualizado)
     } catch (error) {
-        if (error.tipo == 'not found') {
-            res.status(404).json({ error: error.message })
-        } else {
-            res.status(400).json({ error: error.message })
-        }
+        next(error)
     }
 }

@@ -35,5 +35,6 @@ export async function borrarVentaPorId(idVenta) {
 export async function reemplazarVenta(idVenta, datosVenta) {
     const venta = crearVenta(datosVenta)
     venta.id = idVenta
-    await dao.guardarVenta(venta);
+    await dao.guardarVenta(venta)
+    return venta
 }

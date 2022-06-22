@@ -1,8 +1,9 @@
-import { obtenerNuevoId } from '../../compartidos/ids.js'
+import { obtenerNuevoId } from '../../shared/ids/ids.js'
+import { crearErrorDeDatosFaltantes } from '../../shared/errors/models/ErrorDeDatosFaltantes.js'
 
 export const crearUsuario = (datos) => {
     if (!datos.nombre || !datos.apellido) {
-        throw new Error('El usuario debe tener un nombre con apellido')
+        throw crearErrorDeDatosFaltantes('nombre y apellido')
     }
 
     const usuario ={
