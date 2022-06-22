@@ -1,12 +1,14 @@
-import assert from "assert";
-import axios from "axios";
-import { conectar, desconectar } from "../src/servidor.js";
+import assert from "assert"
+import axios from "axios"
+import { conectar, desconectar } from '../src/server/servidor.js'
 
 import {
   obtenerVentas, agregarVenta,
   borrarVentas,
   obtenerVentasPorId
 } from '../src/ventas/services/ventas.js'
+
+import daoVentas from '../src/ventas/database/ventasDao.js'
 
 const ventasTest = [
   {
@@ -54,12 +56,12 @@ describe("servidor de pruebas", () => {
     await desconectar();
   });
 
-  beforeEach(() => {
-    borrarVentas()
+  beforeEach(async () => {
+    await borrarVentas()
   })
 
-  afterEach(() => {
-    borrarVentas()
+  afterEach(async() => {
+    await borrarVentas()
   })
 
   describe("el servidor esta escuchando", () => {

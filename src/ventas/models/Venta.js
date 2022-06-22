@@ -1,14 +1,15 @@
-import { obtenerNuevoId } from '../../compartidos/ids.js'
+import { obtenerNuevoId } from '../../shared/ids/ids.js'
+import { crearErrorDeDatosFaltantes } from '../../shared/errors/models/ErrorDeDatosFaltantes.js'
 
 export const crearVenta = (datos) => {
     if (!datos.productos) {
-        throw new Error('No puede haber ventas sin productos')
+        throw crearErrorDeDatosFaltantes('productos')
     }
     if (!datos.idUsuario) {
-        throw new Error('La venta debe tener un usuario')
+        throw crearErrorDeDatosFaltantes('idUsuario')
     }
 
-    const venta ={
+    const venta = {
         id : obtenerNuevoId('venta'),
         idUsuario : datos.idUsuario,
         productos : datos.productos

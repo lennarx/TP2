@@ -1,45 +1,72 @@
-// // import { MongoClient } from "mongodb"
-// // const uri = "mongodb://localhost:27017";
-// // const client = new MongoClient(uri);
+import {crearErrorRecursoNoEncontrado} from '../../shared/errors/models/ErrorRecursoNoEncontrado.js'
+import { crearErrorDePersistencia } from '../../shared/errors/models/ErrorDePersistencia.js';
+import { database } from '../../shared/databases/mongoDbClient.js';
 
-// // await client.connect();
+const ventas = database.collection('Ventas');
 
-// // const database = client.db('TP2');
-// // const ventas = database.collection('Ventas');
+export async function guardarVenta(venta) {
+    try{
+        await ventas.updateOne({ id: venta.id }, { $set: venta }, { upsert: true })
+    } catch(error){
+        throw crearErrorDePersistencia()
+    }
+   
+}
 
-// // export async function guardarVenta(venta) {
-// //     const result = await ventas.updateOne({ id: venta.id }, { $set: venta }, { upsert: true })
-// //     return
-// // }
+export async function obtenerVentaPorId(id) {
+    let ventaBuscada 
+    try {
+        ventaBuscada = await ventas.findOne({ id }, { projection: { _id: 0 } })
+    } catch(error) {
+        throw crearErrorDePersistencia()
+    }
 
-// // export async function obtenerVentaPorId(id) {
-// //     const ventaBuscada = await ventas.findOne({ id }, { projection: { _id: 0 } })
-// //     if (ventaBuscada) {
-// //         return ventaBuscada
-// //     } else {
-// //         throw Error('')
-// //     }
-// // }
+    if(!ventaBuscada){
+        throw crearErrorRecursoNoEncontrado('venta')
+    }
 
-// // export async function recuperarVentas() {
-// //     const ventasArray = await ventas.find().project({ _id: 0 }).toArray();
-// //     return ventasArray
-// // }
+    return ventaBuscada
+}
 
-// // export async function obtenerVentasSegunUsuario(idUsuario) {
-// //     return await ventas.find({ usuario: { $all: [idUsuario] } }).project({ _id: 0 }).toArray()
-// // }
+export async function recuperarVentas() {
+    try{
+        const ventasArray = await ventas.find().project({ _id: 0 }).toArray();
+        return ventasArray
+    } catch (error) {
+        throw crearErrorDePersistencia()
+    }
+    
+    
+}
 
-// // export async function borrarVentaPorId(id) {
-// //     const result = await ventas.deleteOne({ id })
-// //     if (result.deletedCount === 0) {
-// //         throw Error('')
-// //     }
-// // }
+export async function obtenerVentasSegunUsuario(idUsuario) {
+    try{
+        return await ventas.find({ usuario: { $all: [idUsuario] } }).project({ _id: 0 }).toArray()
+    } catch(error) {
+        throw crearErrorDePersistencia()
+    }
+    
+}
 
-// // export async function borrarVentas() {
-// //     await ventas.deleteMany({})
-// // }
+export async function borrarVentaPorId(id) {
+    let result 
+    try{
+      result = await ventas.deleteOne({ id })  
+    } catch(error) {
+        throw crearErrorDePersistencia()
+    }
+    if (result.deletedCount === 0) {
+        throw crearErrorRecursoNoEncontrado('venta')
+    }
+}
+
+export async function borrarVentas() {
+    try {
+        await ventas.deleteMany({})
+} catch (error) {
+    throw crearErrorDePersistencia()
+}
+}
 
 // export async function nombreEstaDisponible(nombre) {
 //     const result = await carreras.findOne({ nombre });
