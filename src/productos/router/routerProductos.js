@@ -10,13 +10,9 @@ import {
 const routerProductos = new Router()
 
 routerProductos.get('/', getProductosController)
-
 routerProductos.get('/:id', getProductoPorIdController)
-
 routerProductos.post('/', postProductoController)
-
 routerProductos.delete('/:id', deleteProductoController)
-
 routerProductos.put('/:id', putProductoController)
 
 export { routerProductos }
