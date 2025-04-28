@@ -1,11 +1,41 @@
-# TP2
-Trabajo práctico para la materia Taller de Programación 2
+# TP2 - Programming Workshop 2
 
-Integrantes:
--Albin, Sandra => Armado de Middleware de excepciones, refactor a nivel source y armado de centralización de componentes(como ser mongoDb, excepciones y configuraciones en la carpeta shared). Colaboración inicial en ventas.
+This project is a **small e-commerce application** developed for academic purposes.  
+It was built using **Node.js** and **Express.js**, with **MongoDB** as the database.  
+The main objective was to practice backend development concepts such as layered architecture, modularization, middleware handling, testing, and file uploads.
 
--Castro Martínez, Gastón => Armado de feature de usuarios (DAO, router, controller y service) con sus respectivos tests y carga de archivos con Multer
+## Team Members and Responsibilities
 
--Godoy, Rubén => Armado de feature de Productos (DAO, router, controller y service) con sus respectivos tests y capa de login dentro de carpeta homónima junto con Middleware respectivo.
+- **Albin, Sandra**  
+  - Developed the exception handling middleware.  
+  - Refactored the code at the source level.  
+  - Centralized shared components (MongoDB connection, exception handling, and configurations) into a `shared` folder.  
+  - Contributed initially to the sales module.
 
--Redoni, Franco => Armado de feature de ventas (DAO, router, controller y service) con sus respectivos tests, y capa de persistencia en mongo en usuarios, productos y ventas. Ordenamiento general de código y refactor inicial en capas para poder trabajar segmentados.
+- **Castro Martínez, Gastón**  
+  - Developed the users feature (DAO, router, controller, and service).  
+  - Implemented tests for the users feature.  
+  - Handled file uploads using **Multer**.
+
+- **Godoy, Rubén**  
+  - Developed the products feature (DAO, router, controller, and service).  
+  - Implemented tests for the products feature.  
+  - Built the login layer within its own module, along with the corresponding middleware.
+
+- **Redoni, Franco**  
+  - Developed the sales feature (DAO, router, controller, and service).  
+  - Implemented tests for the sales feature.  
+  - Implemented MongoDB persistence for users, products, and sales.  
+  - Led the initial codebase refactoring and structured the project into a layered architecture to enable modular development.
+
+## Technologies Used
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- Multer
+- Jest (for testing)
+
+---
+
