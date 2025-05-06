@@ -1,3 +1,5 @@
+import e from "express"
+
 export function manejadorDeErrores(error, req, res, next) {
     let statusCode = 500
     let errorMessage = 'error interno'
@@ -16,8 +18,12 @@ export function manejadorDeErrores(error, req, res, next) {
             errorMessage = error.message
             statusCode = 409
             break
+        case 'MISSING_FILE' :
+            errorMessage = error.message
+            break;
         case 'ERROR_PERSISTENCIA':
             errorMessage = error.message
+       
     }
     res.status(statusCode).json({ errorMessage })
 }
